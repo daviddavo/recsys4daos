@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling>=1.22.2", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "recsys24-daos"
+dynamic = ["version"]
+authors = [
+  { name="David Davó", email="david@ddavo.me" },
+]
+description = "Code for David Davó et al. paper at RecSys'24"
+readme = "README.md"
+license = { file = "LICENSE" }
+# Waiting for recommenders to be updated
+requires-python = ">=3.8, <3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 7 - Inactive",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "recommenders",
+    "tensorflow",
+]
+
+[project.optional-dependencies]
+notebooks = [
+    "ipywidgets",
+    "jupyterlab", 
+    "matplotlib",
+    "ray[tune]",
+    "hyperopt",
+]
+gpu = [
+    "recommenders[gpu]"
+]
+
+[project.urls]
+Homepage = "https://github.com/daviddavo/recsys24-daos"
+Issues = "https://github.com/daviddavo/recsys24-daos/issues"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "python-simplified-semver"
+local_scheme = "no-local-version"
+parentdir_prefix_version = "hatch-"
+git_describe_command = ["git", "describe", "--dirty", "--tags", "--long", "--match", "hatch-v*"]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/recsys24_daos/_version.py"
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
+
+[tool.hatch.envs.default]
+dependencies =  [
+    "pytest",
+    "flake8-pyproject",
+    "flake8-import-order",
+    "mypy",
+    "pandas-stubs",
+]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest src"
+lint = "flake8 src"
+types = "mypy src"
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.8", "3.9"]
+
+[tool.flake8]
+max-line-length = 120
+import-order-style = "google"
