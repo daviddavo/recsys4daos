@@ -6,10 +6,10 @@ from recommenders.datasets.pandas_df_utils import filter_by
 from recommenders.models.deeprec.models.graphrec.lightgcn import LightGCN
 from recommenders.utils.python_utils import get_top_k_scored_items
 
-
 class OpenPop:
     def __init__(self, train: pd.DataFrame):
-        self._train = train
+        # Sorting by date for replicability
+        self._train = train.sort_values('timestamp', ascending=False)
         self._df = None
 
     def recommend_k_items(self, users, top_k: int = 5, *, recommend_from=None, remove_train: bool = True):

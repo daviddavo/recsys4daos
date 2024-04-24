@@ -30,7 +30,10 @@ notebooks = [
     "ipywidgets",
     "jupyterlab", 
     "matplotlib",
+    "nbdime",
+    "plotly",
     "ray[tune]",
+    "solara",
     "hyperopt",
 ]
 gpu = [
