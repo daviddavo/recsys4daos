@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: >-
+  Enhancing Voter Engagement in Decentralized Governance: A
+  Recommender System for DAOs using Graph Neural Networks
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: David
+    family-names: Davó
+    email: david@ddavo.me
+    affiliation: Universidad Complutense de Madrid
+    orcid: 'https://orcid.org/0000-0003-1744-8314'
+  - given-names: Javier
+    family-names: Arroyo
+    email: javier.arroyo@fdi.ucm.es
+    affiliation: Universidad Complutense de Madrid
+    orcid: 'https://orcid.org/0000-0001-6127-7538'
+repository-code: 'https://github.com/daviddavo/recsys24-daos'
+license: MIT
