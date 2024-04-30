@@ -12,7 +12,7 @@ description = "Code for David Davó et al. paper at RecSys'24"
 readme = "README.md"
 license = { file = "LICENSE" }
 # Waiting for recommenders to be updated
-requires-python = ">=3.8, <3.10"
+requires-python = ">=3.8, <3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 7 - Inactive",
@@ -27,14 +27,15 @@ dependencies = [
 
 [project.optional-dependencies]
 notebooks = [
+    "hyperopt",
     "ipywidgets",
     "jupyterlab", 
     "matplotlib",
     "nbdime",
     "plotly",
     "ray[tune]",
+    "seaborn",
     "solara",
-    "hyperopt",
 ]
 gpu = [
     "recommenders[gpu]"

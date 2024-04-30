@@ -1,4 +1,5 @@
-from typing import Optional
+from typing import Optional, Generator
+from collections import namedtuple
 
 import numpy as np
 import pandas as pd
@@ -25,8 +26,8 @@ def current_proposals(dfp, t):
         return props['id']
     return props.index
 
-
-def time_freq_split_current(
+Fold = namedtuple('Fold', ['train', 'test', 'end', 'open_proposals'])
+def cvtt_open(
     dfv: pd.DataFrame,
     freq: str,
     dfp: pd.DataFrame,
@@ -34,17 +35,25 @@ def time_freq_split_current(
     remove_not_in_train_col=None,
     normalize=True,
     inclusive: IntervalClosedType = "left",
-):
+    item_col = 'itemID',
+    time_col = 'timestamp',
+) -> Generator[Fold, None, None]:
+    """
+    The developed method is, basically, a Cross-Validation Through Time but filtering
+    out closed proposals.
+    
+    - https://arxiv.org/abs/2205.05393
+    """
     times = pd.date_range(
-        dfv['timestamp'].min(), dfv['timestamp'].max(), freq=freq, normalize=normalize, inclusive=inclusive
+        dfv[time_col].min(), dfv[time_col].max(), freq=freq, normalize=normalize, inclusive=inclusive
     )
     for train_end in times:
         train, test = get_train_test_from_time(
             train_end, dfv, 'timestamp', remove_not_in_train_col=remove_not_in_train_col
         )
-        all_props = np.union1d(train['itemID'], test['itemID'])
+        all_props = np.union1d(train[item_col], test[item_col])
 
         open_proposals = np.intersect1d(all_props, current_proposals(dfp, train_end))
-        test_filtered = test[test['itemID'].isin(open_proposals)]
+        test_filtered = test[test[item_col].isin(open_proposals)]
 
-        yield train, test_filtered, train_end, np.array(open_proposals)
+        yield Fold(train, test_filtered, train_end, np.array(open_proposals))
