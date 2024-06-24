@@ -1,10 +1,17 @@
 """Utils for use in Jupyter Notebooks
 """
-
+import sys
 import io
 
 from matplotlib import pyplot as plt
 
+def print_versions(*args):
+    print(sys.version)
+    for m in ['recommenders', *args]:
+        try:
+            print(f'{m}:', sys.modules[m].__version__)
+        except KeyError:
+            print(f'module {m} not loaded')
 
 def download_matplotlib(fig: plt.Figure, filename):
     import solara

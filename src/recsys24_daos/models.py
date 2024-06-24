@@ -12,6 +12,10 @@ class OpenPop:
         self._train = train.sort_values('timestamp', ascending=False)
         self._df = None
 
+    def fit(self):
+        # Does nothing
+        ...
+
     def recommend_k_items(self, users, top_k: int = 5, *, recommend_from=None, remove_train: bool = True):
         if recommend_from is None or len(recommend_from) == 0:
             msg = "recommend_from can't be emtpy in OpenPop"
