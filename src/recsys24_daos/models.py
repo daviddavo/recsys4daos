@@ -35,8 +35,8 @@ class OpenPop:
 
 class LightGCNCustom(LightGCN):
     # Copied from LightGCN.fit but RETURNING the data and deleting unnecessary things
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, hparams, data, seed=None):
+        super().__init__(hparams, data, seed=seed)
         self.epochs_done = 0
 
     def fit_epoch(self):
