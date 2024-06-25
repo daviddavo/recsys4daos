@@ -3,7 +3,7 @@ requires = ["hatchling>=1.22.2", "hatch-vcs>=0.3.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "recsys24-daos"
+name = "recsys4daos"
 dynamic = ["version"]
 authors = [
   { name="David Davó", email="david@ddavo.me" },
@@ -19,9 +19,10 @@ classifiers = [
     "Intended Audience :: Science/Research",
 ]
 dependencies = [
+    "lenskit",
     "numpy",
     "pandas",
-    "recommenders",
+    "recommenders @ git+http://github.com/microsoft/recommenders@staging",
     "tensorflow",
 ]
 
@@ -42,11 +43,14 @@ gpu = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/daviddavo/recsys24-daos"
-Issues = "https://github.com/daviddavo/recsys24-daos/issues"
+Homepage = "https://github.com/daviddavo/recsys4daos"
+Issues = "https://github.com/daviddavo/recsys4daos/issues"
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.version.raw-options]
 version_scheme = "python-simplified-semver"
@@ -55,7 +59,7 @@ parentdir_prefix_version = "hatch-"
 git_describe_command = ["git", "describe", "--dirty", "--tags", "--long", "--match", "hatch-v*"]
 
 [tool.hatch.build.hooks.vcs]
-version-file = "src/recsys24_daos/_version.py"
+version-file = "src/recsys4daos/_version.py"
 
 [tool.hatch.build.targets.wheel]
 sources = ["src"]

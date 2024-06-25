@@ -22,15 +22,14 @@ class OpenPop:
             raise ValueError(msg)
 
         bestVotes = self._train[self._train['itemID'].isin(recommend_from)]['itemID'].value_counts()
-        df = pd.DataFrame(it.product(users, bestVotes.index), columns=['userID', 'itemID'])
+        df = bestVotes.to_frame('prediction').reset_index().merge(pd.Series(users, name='userID'), how='cross')
 
         if remove_train:
             df = filter_by(df, self._train, ['userID', 'itemID'])
 
         df = df.groupby('userID').head(top_k).reset_index(drop=True)
 
-        df['prediction'] = True
-        return df
+        return df[['itemID', 'userID', 'prediction']]
 
 
 class LightGCNCustom(LightGCN):
