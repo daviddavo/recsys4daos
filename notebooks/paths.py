@@ -54,12 +54,14 @@ def save_perfect(df: pd.DataFrame, org_name: str, splits_freq: str, splits_norma
 def load_perfect(df: pd.DataFrame, org_name: str, splits_freq: str, splits_normalize: bool):
     return _load_pq(df, 'baseline/perfect', org_name, splits_freq, splits_normalize)
 
-def load_proposals(org_name, base=DEFAULT_DATA_PATH):
+def load_proposals(org_name, base=DEFAULT_DATA_PATH, text=False):
     base = Path(base).expanduser()
-    df = pd.read_csv(base / org_name / 'proposals.csv', parse_dates=['date', 'start', 'end'])
+    df = pd.read_parquet(base / org_name / 'proposals.pq')
+    if not text:
+        df.drop(columns=['title', 'description'], inplace=True)
     return df
 
 def load_votes(org_name, base=DEFAULT_DATA_PATH):
     base = Path(base).expanduser()
-    df = pd.read_csv(base / org_name / 'votes.csv', parse_dates=['date'])
+    df = pd.read_parquet(base / org_name / 'votes.pq')
     return df
