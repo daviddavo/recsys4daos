@@ -1,11 +1,19 @@
 import os, sys
 from pathlib import Path
+import json
 
 import pandas as pd
+
+from recsys4daos.evaluation import all_metric_ks
 
 DEFAULT_DATA_PATH = '../data'
 DEFAULT_OUTPUT_PATH = '../data/outputs'
 DEFAULT_CACHE_PATH = '../.cache'
+MODEL_RESULTS_COLS = [
+    'time_train',
+    'time_rec',
+    'time_eval',
+]
 
 def _gen_fname(prefix, org_name, splits_freq, normalize, *, ext='csv', **kwargs) -> Path:
     other_args = "-".join([ f"{k}={v}" for k,v in kwargs.items() if v ])
@@ -45,14 +53,26 @@ def _load_pq(prefix, *args, **kwargs):
 def save_openpop(df: pd.DataFrame, org_name: str, splits_freq: str, splits_normalize: bool):
     _save_pq(df, 'baseline/openpop', org_name, splits_freq, splits_normalize)
 
-def load_openpop(df: pd.DataFrame, org_name: str, splits_freq: str, splits_normalize: bool):
-    return _load_pq(df, 'baseline/openpop', org_name, splits_freq, splits_normalize)
+def load_openpop(org_name: str, splits_freq: str, splits_normalize: bool):
+    return _load_pq('baseline/openpop', org_name, splits_freq, splits_normalize)
 
 def save_perfect(df: pd.DataFrame, org_name: str, splits_freq: str, splits_normalize: bool):
     _save_pq(df, 'baseline/perfect', org_name, splits_freq, splits_normalize)
 
-def load_perfect(df: pd.DataFrame, org_name: str, splits_freq: str, splits_normalize: bool):
-    return _load_pq(df, 'baseline/perfect', org_name, splits_freq, splits_normalize)
+def load_perfect(org_name: str, splits_freq: str, splits_normalize: bool):
+    return _load_pq('baseline/perfect', org_name, splits_freq, splits_normalize)
+
+def save_model_results(df: pd.DataFrame, results_name, org_name: str, splits_freq: str, splits_normalize: bool, k_recommendations: list[int]):
+    missing_cols = set([*MODEL_RESULTS_COLS, *all_metric_ks(k_recommendations)]).difference(df.columns)
+    if missing_cols:
+        raise ValueError(f'The following columns should be included {missing_cols}')
+
+    # TODO: Check that the index contains the hparams and fold
+    # TODO: Check that the folds are not repeated
+    _save_pq(df, f'models/{results_name}', org_name, splits_freq, splits_normalize)
+
+def get_model_results(results_name, org_name: str, splits_freq: str, splits_normalize: bool):
+    return _load_pq(f'models/{results_name}', org_name, splits_freq, splits_normalize)
 
 def load_proposals(org_name, base=DEFAULT_DATA_PATH, text=False):
     base = Path(base).expanduser()
