@@ -41,6 +41,10 @@ notebooks = [
 gpu = [
     "recommenders[gpu]"
 ]
+dataset = [
+    "kaggle",
+    "duckdb",
+]
 
 [project.urls]
 Homepage = "https://github.com/daviddavo/recsys4daos"
