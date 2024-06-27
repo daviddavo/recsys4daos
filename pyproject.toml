@@ -23,6 +23,7 @@ dependencies = [
     "numpy",
     "pandas",
     "recommenders @ git+http://github.com/microsoft/recommenders@staging",
+    "sentence_transformers",
     "tensorflow",
 ]
 
