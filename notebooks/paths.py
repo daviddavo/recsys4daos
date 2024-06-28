@@ -6,7 +6,7 @@ import pandas as pd
 
 from recsys4daos.evaluation import all_metric_ks
 
-DEFAULT_DATA_PATH = '../data'
+DEFAULT_INPUT_PATH = '../data/inputs'
 DEFAULT_OUTPUT_PATH = '../data/outputs'
 DEFAULT_CACHE_PATH = '../.cache'
 MODEL_RESULTS_COLS = [
@@ -74,14 +74,14 @@ def save_model_results(df: pd.DataFrame, results_name, org_name: str, splits_fre
 def get_model_results(results_name, org_name: str, splits_freq: str, splits_normalize: bool):
     return _load_pq(f'models/{results_name}', org_name, splits_freq, splits_normalize)
 
-def load_proposals(org_name, base=DEFAULT_DATA_PATH, text=False):
+def load_proposals(org_name, base=DEFAULT_INPUT_PATH, text=False):
     base = Path(base).expanduser()
     df = pd.read_parquet(base / org_name / 'proposals.pq')
     if not text:
         df.drop(columns=['title', 'description'], inplace=True)
     return df
 
-def load_votes(org_name, base=DEFAULT_DATA_PATH):
+def load_votes(org_name, base=DEFAULT_INPUT_PATH):
     base = Path(base).expanduser()
     df = pd.read_parquet(base / org_name / 'votes.pq')
     return df

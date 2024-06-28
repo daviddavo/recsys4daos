@@ -1,4 +1,6 @@
-These files were generated using the [gen_csv notebook](../notebooks/gen_csv.ipynb), from the [DAO Census TFM](https://www.kaggle.com/datasets/daviddavo/daos-census-tfm) dataset.
+## Input folder
+
+The input files were generated using the [gen_input notebook](../notebooks/gen_input.ipynb), from the [DAO Census TFM](https://www.kaggle.com/datasets/daviddavo/daos-census-tfm) dataset.
 
 This is an old version of the [Census of the Ecosystem of Decentralized Autonomous Organizations](https://zenodo.org/records/10794916) dataset, agumented with textual information.
 
