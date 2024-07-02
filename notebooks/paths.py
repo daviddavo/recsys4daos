@@ -6,8 +6,8 @@ import pandas as pd
 
 from recsys4daos.evaluation import all_metric_ks
 
-DEFAULT_INPUT_PATH = '../data/inputs'
-DEFAULT_OUTPUT_PATH = '../data/outputs'
+DEFAULT_INPUT_PATH = '../data/input'
+DEFAULT_OUTPUT_PATH = '../data/output'
 DEFAULT_CACHE_PATH = '../.cache'
 MODEL_RESULTS_COLS = [
     'time_train',

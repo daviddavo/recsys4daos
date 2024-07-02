@@ -1,4 +1,7 @@
 /data/cache
+# Ignore notebooks in the root folder 
+# as they are mostly scrapbooks
+/*.ipynb
 
 # Environments
 .direnv
