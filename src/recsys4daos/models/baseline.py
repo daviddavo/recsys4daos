@@ -13,7 +13,7 @@ class OpenPop:
         ...
 
     def recommend_k_items(self, users, top_k: int = 5, *, recommend_from=None, remove_train: bool = True):
-        if recommend_from is None or len(recommend_from) == 0:
+        if recommend_from is None:
             msg = "recommend_from can't be emtpy in OpenPop"
             raise ValueError(msg)
 

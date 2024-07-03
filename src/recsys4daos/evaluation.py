@@ -1,3 +1,4 @@
+import warnings
 import itertools as it
 
 import numpy as np
@@ -75,7 +76,11 @@ def test_with_hparams_lenskit(
     
         # TODO: Use lenskit.batch.recommend
         # https://lkpy.lenskit.org/en/stable/batch.html#recommendation
-        recs = pd.concat(map(_recu, users))
+        if users:
+            recs = pd.concat(map(_recu, users))
+        else:
+            warnings.warn(f"No users to recommend to with window_size {window_size}", RuntimeWarning)
+            recs = pd.DataFrame(columns=[col_item, col_user, 'prediction'])
 
     return { 
         'fold_t': fold.end,

@@ -23,7 +23,10 @@ pip instell -e .[notebooks]
 
 ## Training
 
-Run the [11_microsoft_tuning.ipynb](./notebooks/10_baseline.ipynb) notebook
+Run the [run_all.ipynb](./notebooks/run_all.ipynb) notebook. It will take multiple hours or days depending on the system.
+You might want to modify some parameters in the notebooks that use a GPU.
+
+To see the progress, you can open the notebooks in the folder [./nbout/](./nbout/). You might want to use [Jupyter Lab RTC](https://jupyterlab.readthedocs.io/en/stable/user/rtc.html), as it will automatically reload the notebook when there are changes on the disk.
 
 ### Training artifacts (pre-trained models)
 

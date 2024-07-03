@@ -11,7 +11,7 @@ import pandas as pd
 from pandas._typing import IntervalClosedType
 from tqdm.autonotebook import tqdm
 
-DEFAULT_CHECKPOINT_EVERY = dt.timedelta(seconds=30)
+DEFAULT_CHECKPOINT_EVERY = dt.timedelta(seconds=60)
 
 def get_train_test_from_time(train_end_t, df, timestamp_col, remove_not_in_train_col: Optional[str] = None):
     train = df[df[timestamp_col] <= train_end_t]
@@ -41,6 +41,7 @@ def cvtt_open(
     *,
     remove_not_in_train_col=None,
     normalize=True,
+    last_fold: dt.datetime | np.datetime64 | str = None,
     inclusive: IntervalClosedType = "left",
     col_item = 'itemID',
     col_time = 'timestamp',
@@ -51,12 +52,14 @@ def cvtt_open(
     
     - https://arxiv.org/abs/2205.05393
     """
+    last_fold = np.datetime64(last_fold) if last_fold else None
     times = pd.date_range(
         dfv[col_time].min(), dfv[col_time].max(), freq=freq, normalize=normalize, inclusive=inclusive
     )
+    assert (last_fold is None) or (last_fold in times), 'The last_fold should be in the folds'
     for train_end in times:
         train, test = get_train_test_from_time(
-            train_end, dfv, 'timestamp', remove_not_in_train_col=remove_not_in_train_col
+            train_end, dfv, col_time, remove_not_in_train_col=remove_not_in_train_col
         )
         all_props = np.union1d(train[col_item], test[col_item])
 
@@ -64,6 +67,8 @@ def cvtt_open(
         test_filtered = test[test[col_item].isin(open_proposals)]
 
         yield Fold(train, test_filtered, train_end, np.array(open_proposals))
+        if train_end == last_fold:
+            break
 
 def save_progress(data, fname, keys):
     fname.parent.mkdir(parents=True, exist_ok=True)
@@ -114,4 +119,5 @@ def explore_hparams(func, param_grid, fname, checkpoint_every=DEFAULT_CHECKPOINT
 
     # Convert the results to records format
     asked = { tuple(v for _,v in sorted(p.items())) for p in param_grid }
+    assert len(asked) == len(param_grid)
     return [ dict(zip(keys,v)) | r for v,r in results.items() if v in asked ]

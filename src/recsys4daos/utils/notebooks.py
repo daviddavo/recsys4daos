@@ -55,12 +55,18 @@ def run_dao_notebook(fname, output_path, EXECUTION_ID, **kwargs):
     pm.execute_notebook(
         fname,
         outfile,
+        progress_bar={
+            'leave': False,
+            'desc': str(outfile),
+        },
         autosave_cell_every=30,
         parameters=dict(
             EXECUTION_ID=EXECUTION_ID,
             **kwargs
         ),
     )
+    # Make readonly
+    print("Finished running", str(outfile))
 
 def download_matplotlib(fig: plt.Figure, filename):
     import solara
