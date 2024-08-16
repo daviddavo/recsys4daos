@@ -76,12 +76,12 @@ def get_model_results(results_name, org_name: str, splits_freq: str, splits_norm
 
 def load_proposals(org_name, base=DEFAULT_INPUT_PATH, text=False):
     base = Path(base).expanduser()
-    df = pd.read_parquet(base / org_name / 'proposals.pq')
+    df = pd.read_parquet(base / org_name / 'proposals.parquet')
     if not text:
         df.drop(columns=['title', 'description'], inplace=True)
     return df
 
 def load_votes(org_name, base=DEFAULT_INPUT_PATH):
     base = Path(base).expanduser()
-    df = pd.read_parquet(base / org_name / 'votes.pq')
+    df = pd.read_parquet(base / org_name / 'votes.parquet')
     return df
