@@ -56,7 +56,14 @@ def cvtt_open(
     times = pd.date_range(
         dfv[col_time].min(), dfv[col_time].max(), freq=freq, normalize=normalize, inclusive=inclusive
     )
-    assert (last_fold is None) or (last_fold in times), 'The last_fold should be in the folds'
+    if last_fold is not None:
+        idx = np.searchsorted(times, last_fold)
+
+        if idx >= len(times):
+            raise ValueError(f'The last_fold is too big, last date is {times[-1]}')
+        elif not times[idx] == last_fold:
+            raise ValueError(f'The last_fold should be in the folds, nearest dates: {times[idx-1]}, {times[min(idx, len(times)-1)]}')
+
     for train_end in times:
         train, test = get_train_test_from_time(
             train_end, dfv, col_time, remove_not_in_train_col=remove_not_in_train_col

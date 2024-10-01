@@ -1,5 +1,6 @@
 import warnings
 import itertools as it
+from collections.abc import Collection
 
 import numpy as np
 import pandas as pd
@@ -15,15 +16,15 @@ metrics_f = {
     'r-precision': r_precision_at_k,
 }
 
-def all_metric_ks(Ks: list[int]):
-    if not isinstance(Ks, list):
+def all_metric_ks(Ks: Collection[int]):
+    if not isinstance(Ks, Collection):
         Ks = [Ks]
     return ( f'{name}@{k}' for name,k in it.product(metrics_f.keys(), Ks) )
 
 def calculate_all_metrics(
     rating_true,
     rating_pred,
-    Ks: list[int],
+    Ks: Collection[int],
     **kwargs,
 ) -> dict[str, float]:
     if not isinstance(Ks, list):

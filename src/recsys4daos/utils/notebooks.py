@@ -1,11 +1,35 @@
 """Utils for use in Jupyter Notebooks
 """
+from typing import Any
+
 import sys
 import io
 from pathlib import Path
+from dataclasses import dataclass, asdict, field
+import warnings
 
 import nbformat
 from matplotlib import pyplot as plt
+
+@dataclass(frozen=True)
+class DaoToRun:
+    # Name of the organization (see ./data/input)
+    org_name: str
+    # Frequency of the splits
+    splits_freq: str = '7d'
+    # Wether to normalize the folds (start at 00:00)
+    splits_normalize: bool = True
+    # Number of folds to use
+    last_folds: int = 10
+    # Date of the last fold to use
+    last_fold_date: str = None
+    # Run until this notebook number (inclusive)
+    run_until_nb: int = 100
+    # Note or comment about why the dao is removed
+    comment: str = ""
+    # Extra notebook hyperparameters
+    extra_hparams: dict[str, Any] = field(default_factory=lambda:{})
+
 
 def print_versions(*args):
     print(sys.version)
@@ -28,10 +52,10 @@ def getOldExecID(fname):
     nb = nbformat.read(fname, as_version=4)
     return nb.metadata['papermill']['parameters'].get('EXECUTION_ID')
 
-def run_dao_notebook(fname, output_path, EXECUTION_ID, **kwargs):
+def run_dao_notebook(fname, output_path, EXECUTION_ID, *, EXTRA_HPARAMS={}, **kwargs):
     import papermill as pm
     
-    assert fname.exists(), f"No existe el fichero {name}"
+    assert fname.exists(), f"No existe el fichero {fname}"
     
     outpath = Path(output_path) / kwargs['ORG_NAME']
     outpath.mkdir(parents=True, exist_ok=True)
@@ -40,6 +64,9 @@ def run_dao_notebook(fname, output_path, EXECUTION_ID, **kwargs):
     params = pm.inspect_notebook(fname)
     for p in kwargs.keys():
         assert p in params, f'{p} is not in notebook {fname} params'
+    for p in EXTRA_HPARAMS:
+        if p not in EXTRA_HPARAMS:
+            warnings.warn(f'extra hparam {p} is not in notebook {fname} params')
 
     if outfile.exists() and EXECUTION_ID:
         oldExec = getOldExecID(outfile)
@@ -62,7 +89,8 @@ def run_dao_notebook(fname, output_path, EXECUTION_ID, **kwargs):
         autosave_cell_every=30,
         parameters=dict(
             EXECUTION_ID=EXECUTION_ID,
-            **kwargs
+            **EXTRA_HPARAMS,
+            **kwargs,
         ),
     )
     # Make readonly

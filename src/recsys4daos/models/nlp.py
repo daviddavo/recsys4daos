@@ -96,6 +96,9 @@ class NLPSimilarity(NLPModel):
     def recommend_k_items(
         self, to_users, top_k=5, remove_seen=True, recommend_from=None, min_score = 0.0,
     ):
+        if len(to_users) == 0:
+            return pd.DataFrame(columns=[self.col_user, self.col_item, 'prediction'])
+            
         voter_embeddings = self.voter_embeddings.loc[to_users]
         np_voter_embeddings = np.stack(voter_embeddings.to_numpy())
     

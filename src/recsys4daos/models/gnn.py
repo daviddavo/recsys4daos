@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from recommenders.models.deeprec.DataModel import ImplicitCF
 from recommenders.models.deeprec.models.graphrec.lightgcn import LightGCN
 from recommenders.utils.python_utils import get_top_k_scored_items
 
@@ -13,7 +14,7 @@ class LightGCNCustom(LightGCN):
         """Fit the model on self.data.train."""
         loss, mf_loss, emb_loss = 0.0, 0.0, 0.0
         n_batch = self.data.train.shape[0] // self.batch_size + 1
-        for _ in range(n_batch):
+        for idx in range(n_batch):
             users, pos_items, neg_items = self.data.train_loader(self.batch_size)
             _, batch_loss, batch_mf_loss, batch_emb_loss = self.sess.run(
                 [self.opt, self.loss, self.mf_loss, self.emb_loss],
@@ -48,7 +49,7 @@ class LightGCNCustom(LightGCN):
         """
         Copy-pasted from LightGCN but adding the `recommend_from` argument
         """
-        data = self.data
+        data: ImplicitCF = self.data
         if not use_id:
             user_ids = np.array([data.user2id[x] for x in test[data.col_user].unique()])
         else:
@@ -59,8 +60,8 @@ class LightGCNCustom(LightGCN):
         # ========== START NEW BEHAVIOUR
         if recommend_from is not None:
             assert len(recommend_from) > 0, "Recommend from can't be empty"
-            # from_idx = np.array([data.item2id[x] for x in set(recommend_from) if x in data.item2id])
-            from_idx = np.array([data.item2id[x] for x in set(recommend_from)])
+            # Is filtering out proposals not in test nor train a data leak?
+            from_idx = np.array([data.item2id[x] for x in set(recommend_from) if x in data.item2id])
             assert from_idx.size >= 0, "from_idx is empty"
             msk = np.ones(test_scores.shape[1], bool)
             msk[from_idx] = False
