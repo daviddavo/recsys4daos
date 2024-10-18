@@ -1,0 +1,250 @@
+[
+    {
+        "org_name": "Decentraland",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-07-13",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "HausDao Warcamp",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": null,
+        "run_until_nb": 10,
+        "comment": "There are no ten succesive folds with open proposals",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "PancakeSwap",
+        "splits_freq": "3d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-06-27",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {
+            "MAX_BATCH_SIZE": 9
+        }
+    },
+    {
+        "org_name": "Balancer",
+        "splits_freq": "3d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": null,
+        "run_until_nb": 19,
+        "comment": "There are no ten succesive folds with open proposals, see 10_baseline.ipynb",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "DEAD FoundationsDAO",
+        "splits_freq": "2d",
+        "splits_normalize": true,
+        "last_folds": 20,
+        "last_fold_date": "2021-11-28",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {
+            "MAX_BATCH_SIZE": 9,
+            "GPUS": 32
+        }
+    },
+    {
+        "org_name": "MetaCartel - MetaCartel Ventures",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-01-06",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Genesis Alpha",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2019-12-04",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "NFTX",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2021-08-26",
+        "run_until_nb": 1,
+        "comment": "Some proposals have votes after they were closed",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "HUWA-DAO",
+        "splits_freq": "2d",
+        "splits_normalize": true,
+        "last_folds": 6,
+        "last_fold_date": "2021-11-13",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Index Coop",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-07-13",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Lido",
+        "splits_freq": "W-WED",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-07-06",
+        "run_until_nb": 99,
+        "comment": "It is not in the top 20 DAOs and it has just 223 proposals. Will not run GNN on it.",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "SharkDAO",
+        "splits_freq": "3d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-04-27",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "dOrg",
+        "splits_freq": "2d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-02-18",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "dxDAO - xDXdao",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-05-05",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Bancor",
+        "splits_freq": "3d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-01-26",
+        "run_until_nb": 10,
+        "comment": "I could not find any folds with enough proposals in test",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Raid Guild",
+        "splits_freq": "W-THU",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2021-12-30",
+        "run_until_nb": 10,
+        "comment": "I could not find any folds with enough proposals in test",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "JuiceboxDAO",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": null,
+        "run_until_nb": 1,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Frax",
+        "splits_freq": "5d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2022-05-26",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Bent Finance",
+        "splits_freq": "2d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-04-30",
+        "run_until_nb": 10,
+        "comment": "",
+        "extra_hparams": {}
+    },
+    {
+        "org_name": "Aave - Aavegotchi",
+        "splits_freq": "5d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-05-01",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {
+            "WINDOW_SIZES": [
+                "1d",
+                "7d",
+                "14d"
+            ],
+            "PLN_MODEL_NAMES": [
+                "all-MiniLM-L12-v2"
+            ]
+        }
+    },
+    {
+        "org_name": "Aura Finance",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-07-14",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {
+            "MIN_BATCH_SIZE": 4
+        }
+    },
+    {
+        "org_name": "Magic Square",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": "2023-07-17",
+        "run_until_nb": 99,
+        "comment": "",
+        "extra_hparams": {
+            "MIN_BATCH_SIZE": 4
+        }
+    },
+    {
+        "org_name": "Good Morning News",
+        "splits_freq": "7d",
+        "splits_normalize": true,
+        "last_folds": 10,
+        "last_fold_date": null,
+        "run_until_nb": 10,
+        "comment": "\n        A strange DAO used as a news portal. A proposal was created every day with four\n        interesting links or headlines. People voted on them, but I still don't know if \n        it was a kind of \"like\", or if the winning news were fully developed the next\n        day.\n        ",
+        "extra_hparams": {}
+    }
+]
